@@ -1,5 +1,9 @@
 import smtplib
 from email.message import EmailMessage
+from pathlib import Path
+from string import Template
+
+html = Template(Path('index.html').read_text())
 
 email = EmailMessage()
 
@@ -7,13 +11,7 @@ email['from'] = 'BAAF Company'
 email['to'] = 'abdoulfaridbassirou7898@gmail.com'
 email['subject'] = 'Promotion'
 
-email.set_content('''
-      Dear Founder,
-
-      BAAF Company has achieved a remarkable promotion and has grown significantly!
-
-      kind regards
-	''')
+email.set_content(html.substitute({'name':'Farid'}),'html')
 
 with smtplib.SMTP(host='smtp.gmail.com',port=587) as smtp:
 	smtp.ehlo()
